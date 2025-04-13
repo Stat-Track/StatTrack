@@ -8,11 +8,11 @@ html {
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: navy; /* Navy blue */
+    background-color: navy; 
     color: white;
     padding-top: 20px;
     padding-left: 15px;
-    font-family: 'Roboto', sans-serif; /* Easy to read font */
+    font-family: 'Roboto', sans-serif; 
     font-weight: bold;
 }
 
@@ -21,36 +21,36 @@ html {
     text-decoration: none;
     display: block;
     padding: 10px;
-    font-weight: normal; /* Keep links not bold unless you want emphasis */
+    font-weight: normal; 
 }
 
 #sidebar a:hover {
-    background-color: #2c3e50; /* Darker shade on hover */
+    background-color: #2c3e50; 
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;  /* Bold headings */
-    color: navy;  /* Navy blue for professionalism */
+    font-weight: bold;  
+    color: navy;  
 }
 
 body {
-    font-family: 'Roboto', sans-serif;  /* Default readable font */
-    background-color: #ffffff;  /* White background */
-    color: #000000;  /* Black text for readability */
+    font-family: 'Roboto', sans-serif;  
+    background-color: #ffffff;  
+    color: #000000; 
     margin: 0;
     padding: 20px;
 }
 
 .content-area {
-    background-color: #ffffff; /* White background */
+    background-color: #ffffff; 
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow to lift it */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 button, a.button {
-    background-color: #9cbb7c; /* Sage Green */
+    background-color: #9cbb7c; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -63,12 +63,12 @@ button, a.button {
 }
 
 button:hover, a.button:hover {
-    background-color: #7a9a5a; /* Darker sage on hover */
+    background-color: #7a9a5a; 
     cursor: pointer;
 }
 
 header, nav {
-    background-color: navy;  /* Navy Blue */
+    background-color: navy; 
     color: white;
     padding: 15px;
     font-family: 'Roboto', sans-serif;
@@ -83,6 +83,6 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #2c3e50; /* Darker navy on hover */
+    background-color: #2c3e50; 
 }
 
