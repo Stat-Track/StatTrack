@@ -1,19 +1,19 @@
 from App.database import db
 
 class Campus(db.Model):
-    campusID = db.Column(db.Integer, primary_key=True)
-    campusName = db.Column(db.String(120), nullable=False)
-    location = db.Column(db.String(120))
-    faculties = db.relationship('Faculty')
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False, unqiue=True)
+    faculties = db.relationship('Faculty', backref='campus', lazy=True, cascade="all, delete-orphan")
 
+    def __init__(self, name):
+        self.name = name
 
     def __repr__(self):
         return f'<Campus {self.campusId} - {self.campusName}>'
     
-    def toJson(self):
+    def get_json(self):
         return{
-            'campusId':self.campusID,
-            'campusName':self.campusName,
-            'location':self.location,
-            'faculties':self.faculties
+            "id": self.campusID,
+            "name": self.campusName,
+            "faculties": self.faculties
         }
