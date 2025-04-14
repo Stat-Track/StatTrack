@@ -1,5 +1,9 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from App.models.user import User
+
+
 
 
 from.index import index_views
@@ -39,6 +43,28 @@ def login_action():
         set_access_cookies(response, token) 
     return response
 
+@auth_views.route('/signup', methods=['GET', 'POST'])
+def signup_action():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if password != confirm_password:
+            flash("Passwords do not match", "danger")
+            return render_template("signup.html")
+
+        user = User(username=username, password=password)
+
+        if user:
+            flash("Account created successfully!", "success")
+            return redirect(url_for('auth_views.get_user_page'))
+        else:
+            flash("Username already exists or something went wrong.", "danger")
+
+    return render_template("signup.html")
+
+
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
     response = redirect(request.referrer) 
@@ -59,6 +85,23 @@ def user_login_api():
   response = jsonify(access_token=token) 
   set_access_cookies(response, token)
   return response
+
+@auth_views.route('/api/signup', methods=['POST'])
+def user_signup_api():
+    data = request.json
+    username = data['username']
+    password = data['password']
+    confirm_password = data['confirm_password']
+
+    if password != confirm_password:
+        return jsonify(message="Passwords do not match"), 400
+
+    user = User(username=username, password=password)
+
+    if user:
+        return jsonify(message="Account created successfully!"), 201
+    else:
+        return jsonify(message="Username already exists or something went wrong."), 400
 
 @auth_views.route('/api/identify', methods=['GET'])
 @jwt_required()
