@@ -4,8 +4,12 @@ from App.database import db
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String(20), nullable=False, unique=True)
-    user_type = db.Column(db.String(20), nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    type = db.Column(db.String(50))
+    __mapper_args__ = {
+      'polymorphic_identity': 'user',
+      'polymorphic_on': type
+    }
 
     def __init__(self, username, password):
         self.username = username
@@ -13,8 +17,9 @@ class User(db.Model):
 
     def get_json(self):
         return{
-            'id': self.id,
-            'username': self.username
+            "id": self.id,
+            "username": self.username,
+            "type": self.type
         }
 
     def set_password(self, password):
@@ -24,4 +29,7 @@ class User(db.Model):
     def check_password(self, password):
         """Check hashed password."""
         return check_password_hash(self.password, password)
+    
+    def __repr__(self):
+        return f'<User {self.id} - {self.username}>'
 

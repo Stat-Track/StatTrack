@@ -3,19 +3,21 @@ from .user import User
 from App.database import db
 
 class Admin(User):
+    __tablename__ = 'admin'
+    __mapper_args__ = {
+        'polymorphic_identity': 'admin',
+    }
 
     def __init__(self,username,password):
-        self.username = username
-        self.set_password = password
-        self.user_type = "admin"
+        super().__init__(username, password)
     
     def __repr__(self):
-        return f'<Admin {self.id} {self.username}>'
+        return f'<Admin {self.id} - {self.username}>'
 
-    def toJson(self):
+    def get_json(self):
         return{
-            'id': self.id,
-            'username': self.username,
-            'type':'staff'
+            "id": self.id,
+            "username": self.username,
+            "type": self.type
         }
 
