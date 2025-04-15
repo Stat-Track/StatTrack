@@ -1,13 +1,77 @@
-{% extends "layout.html" %}
-{% block title %}Flask MVC App{% endblock %}
-{% block page %}Flask MVC App{% endblock %}
+<!-- {% extends "layout.html" %} -->
 
-{{ super() }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <!-- {% block title %} -->
+    Welcome Page
+    <!-- {% endblock %} -->
+  </title>
 
-{% block content %}
-    <h1>Flask MVC</h1>
-    {% if is_authenticated %}
-        <p> Welcome {{current_user.username}} </p>
-    {% endif %}
-    <p>This is a boileplate flask application which follows the MVC pattern for structuring the project.</p>
-{% endblock %}
+  <!-- Google Fonts and Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+  <!-- Custom CSS -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+  <link rel="stylesheet" href="../static/style.css"> <!-- ⚠️ Comment this line when using Flask -->
+</head>
+
+<body style="font-family: 'Roboto', sans-serif; background-color: #f8f9fa;">
+  <!-- {% block content %} -->
+<!-- <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="Profile Picture" class="circle responsive-img"> -->
+  <div class="layout-container">
+    <!-- Navbar -->
+    <nav class="blue-grey darken-4 navbar">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo right">StatTrack</a>
+      </div>
+    </nav>
+    <div class="layout-body">
+      <!-- Sidebar -->
+      <div id="sidebar">
+        <div class="profile center-align">
+          <img src="../static/images/pfp.jpg" alt="Profile Picture" class="circle responsive-img pfp">
+          <p>Hi, Username</p>
+          <hr />
+        </div>
+        <ul class="menu">
+          <li><a href="#">Upload</a></li>
+          <li><a href="#">Generate Report</a></li>
+          <li><a href="#">View Reports</a></li>
+        </ul>
+        <div class="logout center-align">
+          <a href="#" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
+        </div>
+      </div>
+<!-- Main content area -->
+<div class="main-content">
+  <!-- Put your page content here -->
+</div>
+</div>
+</div>
+<!--<div class="container">  
+    <div class="row">
+      <div class="col s12 m4 l3 "style ="text-align: left;">
+        <div class="profile-section" style="text-align: left; margin-top: 20px;">
+          
+          <img src="../static/images/pfp.jpg" alt="Profile Picture" class="circle responsive-img profile-pic" style="width: 70px; height: 70px"> <!-- ⚠️ Comment this line when using Flask -->
+
+          <!-- <p>Hi, {{ current_user.username if is_authenticated else 'Guest' }}</p> -->
+        
+       
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <!-- {% endblock %} -->
+</body>
+</html>
