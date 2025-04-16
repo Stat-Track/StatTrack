@@ -1,12 +1,19 @@
 from App.models import User
 from App.models.regularuser import RegularUser
 from App.database import db
+from App.models.admin import Admin
 
-def create_user(username, password):
-    newuser = RegularUser(username=username, password=password)
-    db.session.add(newuser)
+def create_user(username, password, user_type='user'):
+    # Check if user_type is 'admin' and create an Admin object; otherwise, create a RegularUser object
+    if user_type == 'admin':
+        new_user = Admin(username=username, password=password)
+    else:
+        new_user = RegularUser(username=username, password=password)
+
+    db.session.add(new_user)
     db.session.commit()
-    return newuser
+    return new_user
+
 
 def get_user_by_username(username):
     return User.query.filter_by(username=username).first()

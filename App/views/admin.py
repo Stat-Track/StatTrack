@@ -15,5 +15,6 @@ class AdminView(ModelView):
         return redirect(url_for('index_page', next=request.url))
 
 def setup_admin(app):
-    admin = Admin(app, name='FlaskMVC', template_mode='bootstrap3')
+    admin = Admin(app, name='FlaskMVC', url='/adminpanel', template_mode='bootstrap3',endpoint='adminpanel')
     admin.add_view(AdminView(User, db.session))
+    app.admin_instance = admin

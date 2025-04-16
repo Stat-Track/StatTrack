@@ -6,6 +6,9 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 
 
+
+
+
 from App.database import init_db
 from App.config import load_config
 
@@ -15,11 +18,17 @@ from App.controllers import (
     add_auth_context
 )
 
-from App.views import views, setup_admin
+from App.views.index import index_views
+from App.views.auth import auth_views
+from App.views.user import user_views
+
+views = [index_views, auth_views, user_views]
 
 def add_views(app):
-    for view in views:
-        app.register_blueprint(view)
+        app.register_blueprint(auth_views, url_prefix='/auth')
+        app.register_blueprint(index_views, url_prefix='/')
+        app.register_blueprint(user_views, url_prefix='/user')
+    
 
 def create_app(overrides={}):
     app = Flask(__name__, static_url_path='/static')
@@ -31,6 +40,7 @@ def create_app(overrides={}):
     add_views(app)
     init_db(app)
     jwt = setup_jwt(app)
+    from App.views.admin import setup_admin
     setup_admin(app)
     @jwt.invalid_token_loader
     @jwt.unauthorized_loader
