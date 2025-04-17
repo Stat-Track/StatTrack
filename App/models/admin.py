@@ -13,6 +13,7 @@ class Admin(User):
     
     def __repr__(self):
         return f'<Admin {self.id} - {self.username}>'
+    
 
     def get_json(self):
         return{
