@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, jsonify, request, flash,
+    Blueprint, render_template, jsonify, request, flash,make_response,
     send_from_directory, redirect, url_for, Flask
 )
 from flask_jwt_extended import (
@@ -8,12 +8,13 @@ from flask_jwt_extended import (
 )
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_admin import AdminIndexView, expose
 
 from App.models.user import User
 from App.views.index import index_views
 from App.controllers import create_user, get_all_users, login
 from App.database import db
+
+
 
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -25,6 +26,16 @@ def setup_admin(app):
     # Add a view for the User model in the admin interface
     admin.add_view(ModelView(User, db.session))
 
+def perform_login(username, password):
+    print(f"Login called with username (type: {type(username)}): {username}")
+    
+    # Ensure the identity is treated as a string
+    username_str = str(username)
+    
+    # Create the token with the string username as identity
+    token = create_access_token(identity=username_str)
+    print(f"Generated token: {token}")  # Print token for debugging
+    return token
 
 '''
 Page/Action Routes
@@ -40,19 +51,32 @@ def get_user_page():
 def identify_page():
     return render_template('message.html', title="Identify", message=f"You are logged in as {current_user.id} - {current_user.username}")
 
+@auth_views.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html')
 
-@auth_views.route('/login', methods=['POST'])
+@auth_views.route('/login', methods=['GET','POST'])
 def login_action():
-    data = request.form
-    token = login(data['username'], data['password'])
+    # Retrieve form data
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-    if not token:
-        flash('Bad username or password given', 'danger')
-        return redirect(request.referrer)
+    # Attempt to login the user
+    token = perform_login(username, password)
 
-    flash('Logged in successfully!', 'success')
-    response = redirect(url_for('index_views.index_page'))
-    return set_access_cookies(response, token)
+    # If token is generated (login success), flash success message and redirect
+    if token:
+        flash('Logged in successfully!', 'success')
+        response = make_response(redirect(url_for('index_views.index_page'))) 
+        print(f"Generated token: {token}") # Redirect to home page
+        set_access_cookies(response, token)
+        return response
+
+    # If token is None (login failure), flash error message and redirect back to login page
+    flash('Bad username or password given', 'danger')
+    return redirect(url_for('auth_views.login_page'))
+
+
 
 """
 @auth_views.route('/signup', methods=['GET', 'POST'])
@@ -150,3 +174,5 @@ def create_app():
     setup_admin(app)
 
     return app
+
+
