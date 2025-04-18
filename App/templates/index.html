@@ -1,4 +1,4 @@
-<{% extends "layout.html" %} >
+{% extends "layout.html" %} >
 <!-- JINJA CODE COMMENTED UNTIL BACKEND -->
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
 
   <!-- Custom CSS -->
-  <<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
   <link rel="stylesheet" href="../static/style.css"> <!-- ⚠️ Comment this line when using Flask -->
 </head>
 
@@ -53,6 +53,20 @@
 <!-- Main content area -->
 <div class="main-content">
   <!-- Put your page content here -->
+  <div class="upload-section">
+    <button class="file-upload">Upload File</button>
+  </div>
+
+  <div class="option-sections">
+    <div class="option-block">
+      <p>Choose Year &gt;</p>
+      <button id="choose-year">List of Years</button>
+    </div>
+    <div class="option-block">
+      <p>Choose Campus &gt;</p>
+      <button class="campus-list">List of Campuses</button>
+    </div>
+  </div>
 </div>
 </div>
 </div>
@@ -63,7 +77,7 @@
           
           <img src="../static/images/pfp.jpg" alt="Profile Picture" class="circle responsive-img profile-pic" style="width: 70px; height: 70px"> <!-- ⚠️ Comment this line when using Flask -->
 
-           <p>Hi, {{ current_user.username if is_authenticated else 'Guest' }}</p>
+         <!--  <p>Hi, {{ current_user.username if is_authenticated else 'Guest' }}</p> -->
         
        
         </div>
