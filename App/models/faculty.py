@@ -1,4 +1,5 @@
 from App.database import db
+from .campus import Campus
 
 class Faculty(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,7 +14,9 @@ class Faculty(db.Model):
         return f'<Campus - {self.campus.name}, Faculty {self.campusId} - {self.campusName}>'
     
     def get_json(self):
-        "id" = self.id
-        "name" = self.name
-        "campus_id" = self.campus_id
+        return{
+            "id": self.id,
+            "name": self.name,
+            "campus_id": self.campus_id
+        }
 

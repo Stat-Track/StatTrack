@@ -1,4 +1,5 @@
 from App.database import db
+from .faculty import Faculty
 import os,string, random
 from werkzeug.utils import secure_filename
 
