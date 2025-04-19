@@ -31,6 +31,13 @@ user_cli = AppGroup('user', help='User object commands')
 
 # Then define the command and any parameters and annotate it with the group (@)
 @user_cli.command("create", help="Creates a user")
+@click.argument("username", default="bob")
+@click.argument("password", default="bobpass")
+def create_user_command(username, password):
+    create_user(username, password)
+    print(f'{username} created!')
+
+@user_cli.command("create", help="Creates a user")
 @click.argument("username", default="rob")
 @click.argument("password", default="robpass")
 def create_user_command(username, password):
@@ -41,6 +48,13 @@ def create_user_command(username, password):
 @user_cli.command("createadmin", help="Creates an admin user")
 @click.argument("username", default="james")
 @click.argument("password", default="jamespass")
+def create_admin_command(username, password):
+    create_user(username, password, role='admin')
+    print(f'Admin {username} created!')
+
+@user_cli.command("createadmin", help="Creates an admin user")
+@click.argument("username", default="alice")
+@click.argument("password", default="alicepass")
 def create_admin_command(username, password):
     create_user(username, password, role='admin')
     print(f'Admin {username} created!')
