@@ -1,5 +1,116 @@
-{% extends 'admin/master.html' %}
+<!-- jaidi akii-bua - correct page after admin login -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+     {% block title %} 
+    Welcome Page
+    {% endblock %} 
+  </title>
 
-{% block body %}
-  <p>Hello world</p>
-{% endblock %}
+  <!-- Google Fonts and Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <link rel="stylesheet" href="../static/style.css"> <!-- ⚠️ Comment this line when using Flask -->
+</head>
+
+<body style="font-family: 'Roboto', sans-serif; background-color: #f8f9fa;">
+  <!-- {% block content %} -->
+
+  <div class="layout-container">
+    <!-- Navbar -->
+    <nav class="indigo darken-4 navbar">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo right">StatTrack</a>
+      </div>
+    </nav>
+    <div class="layout-body">
+      <!-- Sidebar -->
+      <div id="sidebar">
+        <div class="profile center-align">
+          <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="Profile Picture" class="circle responsive-img">
+          <p>Hi, {{ username }}</p>
+          <hr>
+        </div>
+        <ul class="menu">
+          <li><a href= "#", onClick="openForm()">Upload</a></li>
+          <li><a href="#">Generate Report</a></li>
+          <li><a href="#">View Reports</a></li>
+        </ul>
+        <div class="logout center-align">
+          <a href="/login" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
+        </div>
+      </div>
+<!-- Main content area -->
+<div class="main-content">
+  <!-- Put your page content here -->
+  
+  <div class="upload-section">
+    <button class="file-upload" onClick ="openForm()">Upload File</button>
+
+     <!-- The form -->
+<div class="form-popup" id="myForm">
+    <input type="file" id="fileInput" class="hidden">
+    <label for="fileInput" class="uploadButton">Choose File</label>
+    <p id="fileName"></p>
+    <!-- <button class="btn1">Choose File</button> -->
+    <button class="btn2">File Loaded Here</button>
+    <button class="btn3">Upload</button>
+    <button class="btn-cancel" onclick="closeForm()">Close</button>
+    <script>
+      document.getElementById('fileInput').addEventListener('change', function() {
+        var fileName = this.files[0].name;
+        document.getElementById('fileName').textContent = "Selected file: " + fileName;
+      });
+    </script>
+
+    
+  
+  
+  
+</div>
+
+  </div>
+
+  <div class="option-sections">
+    <div class="option-block">
+      <p>Choose Year &gt;</p>
+      <button id="choose-year">List of Years</button>
+    </div>
+   
+
+  <!-- 
+    <div class="option-block">
+      <p>Choose Campus &gt;</p>
+      <button class="campus-list">List of Campuses</button>
+    </div>
+  -->
+  </div>
+</div>
+</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+  </script>
+  <!-- {% endblock %} -->
+</body>
+</html>
