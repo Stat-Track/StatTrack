@@ -5,6 +5,8 @@ from App.database import db
 def initialize():
     db.drop_all()
     db.create_all()
-    create_user('bob', 'bobpass','admin')
-    create_user('alice', 'alicepass','user')
+    create_user('bob', 'bobpass')
+    create_user('rob','robpass')
+    create_user('alice', 'alicepass',role='admin')
+    create_user('james','jamespass', role='admin')
     
