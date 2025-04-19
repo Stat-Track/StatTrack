@@ -53,8 +53,32 @@
 <!-- Main content area -->
 <div class="main-content">
   <!-- Put your page content here -->
+  
   <div class="upload-section">
-    <button class="file-upload">Upload File</button>
+    <button class="file-upload" onClick ="openForm()">Upload File</button>
+
+     <!-- The form -->
+<div class="form-popup" id="myForm">
+    <input type="file" id="fileInput" class="hidden">
+    <label for="fileInput" class="uploadButton">Choose File</label>
+    <p id="fileName"></p>
+    <!-- <button class="btn1">Choose File</button> -->
+    <button class="btn2">File Loaded Here</button>
+    <button class="btn3">Upload</button>
+    <button class="btn-cancel" onclick="closeForm()">Close</button>
+    <script>
+      document.getElementById('fileInput').addEventListener('change', function() {
+        var fileName = this.files[0].name;
+        document.getElementById('fileName').textContent = "Selected file: " + fileName;
+      });
+    </script>
+
+    
+  
+  
+  
+</div>
+
   </div>
 
   <div class="option-sections">
@@ -62,10 +86,14 @@
       <p>Choose Year &gt;</p>
       <button id="choose-year">List of Years</button>
     </div>
+   
+
+  <!-- 
     <div class="option-block">
       <p>Choose Campus &gt;</p>
       <button class="campus-list">List of Campuses</button>
     </div>
+  -->
   </div>
 </div>
 </div>
@@ -73,6 +101,7 @@
 <!--<div class="container">  
     <div class="row">
       <div class="col s12 m4 l3 "style ="text-align: left;">
+        
         <div class="profile-section" style="text-align: left; margin-top: 20px;">
           
           <img src="../static/images/pfp.jpg" alt="Profile Picture" class="circle responsive-img profile-pic" style="width: 70px; height: 70px"> <!-- ⚠️ Comment this line when using Flask -->
@@ -84,8 +113,15 @@
       </div>
     </div>
   </div>
- 
-
+  <script>
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+  </script>
   <!-- {% endblock %} -->
 </body>
 </html>
