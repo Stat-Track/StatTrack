@@ -119,8 +119,8 @@ nav a {
   
   .upload-section button{
     border-radius:20px;
-    margin-right: 315px;
-    margin-top: 100px;
+    margin-right: 500px;
+   margin-top: 20px; 
     font-size: 20px;
     padding: 30px 70px;
     
@@ -128,7 +128,7 @@ nav a {
   .option-sections {   
     display: flex;
     margin-top: 250px;
-    margin-left: 400px;
+    margin-right: 500px;
     gap: 550px; /* space between year/campus blocks */
   }
   
@@ -144,3 +144,82 @@ nav a {
     font-weight: bold;
     margin-bottom: 10px;
   }
+
+
+  
+  /* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: fixed;
+    margin-left: 100px;
+    background-color: #f1f1f1;
+    z-index: 9;
+    width: 750px;
+    height: 500px;
+    margin-top: -30px;
+    border: #ececec 5px solid;
+  }
+  
+ 
+
+  /* Styles for the upload buttons */
+.form-popup label {
+  text-align: center;
+    display: block;
+    background-color: #7a9a5a;
+  color: white;
+  padding: 15px 12px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  width: 250px;
+  margin-bottom:10px;
+  margin-left: 30px;
+  opacity: 0.8;
+  border-radius: 20px;
+margin-top: 2px;
+ 
+}
+.form-popup .btn2 {
+    text-align: center;
+   display: block;
+   background-color: #7a9a5a;
+ color: white;
+ padding: 8x 12px;
+ border: none;
+ cursor: pointer;
+ width: 300px;
+ height: 200px;
+ margin-bottom:10px;
+ margin-left: 100px;
+ opacity: 0.8;
+ border-radius: 40px;
+ margin-top: 40px;
+
+}
+.form-popup .btn3 {
+    text-align: center;
+   display: block;
+   background-color: #7a9a5a;
+ color: white;
+ padding: 8x 12px;
+ border: none;
+ cursor: pointer;
+ width: 300px;
+ margin-bottom:10px;
+ margin-left: 200px;
+ opacity: 0.8;
+ border-radius: 20px;
+ margin-top: 50px;
+}
+  
+.form-popup .hidden{
+    display: none;
+}
+.form-popup .btn-cancel{
+    background-color: grey;
+    padding: 10px 15px;
+    margin-left: 650px;
+    opacity: 0.5;
+    margin-top: -4px;
+}
