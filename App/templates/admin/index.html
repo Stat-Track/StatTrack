@@ -19,7 +19,7 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
-  <link rel="stylesheet" href="../static/style.css"> <!-- ⚠️ Comment this line when using Flask -->
+  <link rel="stylesheet" href="../static/style.css"> 
 </head>
 
 <body style="font-family: 'Roboto', sans-serif; background-color: #f8f9fa;">
@@ -47,7 +47,7 @@
         <ul class="menu">
           <li><a href= "#", onClick="openForm()">Upload</a></li>
           <li><a href="#">Generate Report</a></li>
-          <li><a href="#">View Reports</a></li>
+          <li><a href="reports.html">View Reports</a></li>
         </ul>
         <div class="logout center-align">
           <a href="/login" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
@@ -80,7 +80,7 @@
     <!-- <button class="btn1">Choose File</button> -->
   
     <button class="btn3">Upload</button>
-    <button class="btn-cancel" onclick="closeForm()">Close</button>
+   <button class="btn-cancel" onclick="closeForm()">Close</button>
     <script>
       document.getElementById('fileInput').addEventListener('change', function() {
         var fileName = this.files[0].name;
