@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
+from App.models import User
 
 from.index import index_views
 
@@ -16,7 +18,9 @@ user_views = Blueprint('user_views', __name__, template_folder='../templates')
 @user_views.route('/user_index')
 @jwt_required()
 def user_index():
-    return render_template('user/user_index.html')
+    user_id = get_jwt_identity()  # Get user id from JWT
+    user = User.query.get(user_id)
+    return render_template('user/user_index.html', user=jwt_current_user)    
 
 @user_views.route('/users', methods=['GET'])
 def get_user_page():

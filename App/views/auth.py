@@ -34,6 +34,8 @@ def login_action():
     if not token:
         flash('Bad username or password given', 'danger')
         return redirect(url_for('auth_views.login_page'))
+    
+    flash('Login Successful', 'success')
         
     from App.models import User
     user = User.query.filter_by(username=data['username']).first()
@@ -45,16 +47,16 @@ def login_action():
     # Debug: Print user role to console
     print(f"User {user.username} logged in with role: {user.role}")
     
-    flash('Login Successful', 'success')
+    
     
     # Role-based redirect
     if user.role == 'admin':
         redirect_url = url_for('admin.index')
     else:
         redirect_url = url_for('user_views.user_index')
+
     
     print(f"Redirecting to: {redirect_url}")
-    
     response = redirect(redirect_url)
     set_access_cookies(response, token)
     return response

@@ -37,7 +37,11 @@
       <div id="sidebar">
         <div class="profile center-align">
           <img src="../static/images/pfp.jpg" alt="Profile Picture" class="circle responsive-img pfp">
-          <p>Hi, Username</p>
+          {% if user %}
+  <p>Hi, {{ user.username }}</p>
+{% else %}
+  <p>Hi, Welcome</p>
+{% endif %}
           <hr>
         </div>
         <ul class="menu">
@@ -50,6 +54,7 @@
         </div>
       </div>
 <!-- Main content area -->
+<div class="main-wrapper">
 <div class="main-content">
   <!-- Put your page content here -->
   
@@ -94,6 +99,7 @@
     </div>
   -->
   </div>
+</div>
 </div>
 </div>
 </div>

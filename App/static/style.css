@@ -1,5 +1,6 @@
 html {
     padding: 0;
+    overflow: auto;
 }
 
 #sidebar {
@@ -62,6 +63,7 @@ body {
     color: #000000; 
     margin: 0;
     padding: 20px;
+    overflow: auto;
 }
 
 .content-area {
@@ -158,6 +160,7 @@ nav a {
     height: 500px;
     margin-top: -30px;
     border: #ececec 5px solid;
+    overflow-y: auto;
   }
   
  
@@ -222,4 +225,9 @@ margin-top: 2px;
     margin-left: 650px;
     opacity: 0.5;
     margin-top: -4px;
+}
+
+.main-wrapper {
+  margin-left: 250px; /* same as sidebar width */
+  padding: 20px;
 }

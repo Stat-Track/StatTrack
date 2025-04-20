@@ -12,7 +12,7 @@ def index_page():
         # Try to verify JWT, but don't require it
         verify_jwt_in_request(optional=True)
         
-        if current_user:  # User is authenticated
+        if current_user and current_user.is_authenticated:  # User is authenticated
             if current_user.role == 'admin':
                 return redirect(url_for('admin.index'))
             else:

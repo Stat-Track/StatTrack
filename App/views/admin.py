@@ -6,6 +6,7 @@ from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 from App.models import db, User
 from flask import Blueprint, render_template
 from flask_jwt_extended import jwt_required
+from flask_jwt_extended import current_user as jwt_current_user
 
 class AdminView(ModelView):
     def is_accessible(self):
@@ -29,7 +30,7 @@ def setup_admin(app):
 
 admin_views = Blueprint('admin_views', __name__, template_folder='../templates')
 
-@admin_views.route('/admin_index')
+@admin_views.route('/admin_index') 
 @jwt_required()
 def admin_index():
-    return render_template('admin/index.html')
+    return render_template('admin/index.html',user=jwt_current_user)
