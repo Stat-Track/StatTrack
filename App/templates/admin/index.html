@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-     {% block title %} 
-    Welcome Page
+    {% block title %} 
+    Admin's Welcome Page
     {% endblock %} 
   </title>
 
@@ -38,10 +38,10 @@
         <div class="profile center-align">
           <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="Profile Picture" class="circle responsive-img">
           {% if user %}
-  <p>Hi, {{ user.username }}</p>
-{% else %}
-  <p>Hi, Welcome</p>
-{% endif %}
+            <p>Hi, {{ user.username }}</p>
+          {% else %}
+            <p>Hi, Welcome</p>
+          {% endif %}
           <hr>
         </div>
         <ul class="menu">
@@ -196,6 +196,6 @@
 
   
   </script>
-  <{% endblock %}
+  {% endblock %}
 </body>
 </html>

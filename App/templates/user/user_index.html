@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-    
+     {% block title %} 
+    User Welcome Page
+    {% endblock %} 
   </title>
 
   <!-- Google Fonts and Material Icons -->
@@ -16,11 +18,12 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <link rel="stylesheet" href="../static/style.css"> 
 </head>
 
 <body style="font-family: 'Roboto', sans-serif; background-color: #f8f9fa;">
   <!-- {% block content %} -->
-<img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="Profile Picture" class="circle responsive-img">
+
   <div class="layout-container">
     <!-- Navbar -->
     <nav class="indigo darken-4 navbar">
@@ -32,77 +35,94 @@
       <!-- Sidebar -->
       <div id="sidebar">
         <div class="profile center-align">
-          <img src="../static/images/pfp.jpg" alt="Profile Picture" class="circle responsive-img pfp">
-          <p>Hi, Username</p>
+          <img src="{{ url_for('static', filename='images/pfp.jpg') }}" alt="Profile Picture" class="circle responsive-img">
+          {% if user %}
+            <p>Hi, {{ user.username }}</p>
+          {% else %}
+            <p>Hi, Welcome</p>
+          {% endif %}
           <hr>
         </div>
-        <ul class="menu">
-          <li><a href= "#", onClick="openForm()">Upload</a></li>
-          <li><a href="#">Generate Report</a></li>
-          <li><a href="#">View Reports</a></li>
-        </ul>
+          <!--<li><a href="reports.html">View Reports</a></li>-->
         <div class="logout center-align">
-          <a href="#" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
+          <a href="/login" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
         </div>
       </div>
-<!-- Main content area -->
-<div class="main-content">
-  <!-- Put your page content here -->
-  
-  <div class="upload-section">
-    <button class="file-upload" onClick ="openForm()">Upload File</button>
+        <!-- Main Content -->
+        <div class="main-content" style="flex-grow: 1; padding: 30px;">
+            <h4>View Reports</h4>
 
-     <!-- The form -->
-<div class="form-popup" id="myForm">
-    <input type="file" id="fileInput" class="hidden">
-    <label for="fileInput" class="uploadButton">Choose File</label>
-    <p id="fileName"></p>
-    <!-- <button class="btn1">Choose File</button> -->
-    <button class="btn2">File Loaded Here</button>
-    <button class="btn3">Upload</button>
-    <button class="btn-cancel" onclick="closeForm()">Close</button>
+            <!-- Filter Form -->
+            <div class="card-panel" style="max-width: 900px; margin: 0 auto;">
+                <form method="GET" action="{{ url_for('index_views.index_page') }}">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <select name="campus_id">
+                                <option value="" selected>Campuses</option>
+                                {% for campus in campuses %}
+                                <option value="{{ campus.id }}" {% if selected_campus == campus.id %}selected{% endif %}>{{ campus.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Campus</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <select name="faculty_id">
+                                <option value="" selected>Faculties</option>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty.id }}" {% if selected_faculty == faculty.id %}selected{% endif %}>{{ faculty.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Faculty</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn waves-effect" style="background-color: #9caf88;">Filter</button>
+                </form>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="card-panel">
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th>Report ID</th>
+                            <th>Title</th>
+                            <th>Campus</th>
+                            <th>Faculty</th>
+                            <th>Year</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in reports %}
+                        <tr>
+                            <td>{{ report.id }}</td>
+                            <td>{{ report.title }}</td>
+                            <td>{{ report.campus.name }}</td>
+                            <td>{{ report.faculty.name }}</td>
+                            <td>{{ report.year }}</td>
+                            <td>
+                                <a href="{{ url_for('report_views.view_report', report_id=report.id) }}" 
+                                   class="btn-small waves-effect" style="background-color: #9caf88;">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="center">No reports found matching the criteria.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-      document.getElementById('fileInput').addEventListener('change', function() {
-        var fileName = this.files[0].name;
-        document.getElementById('fileName').textContent = "Selected file: " + fileName;
-      });
+      M.AutoInit();
     </script>
-
-    
-  
-  
-  
-</div>
-
-  </div>
-
-  <div class="option-sections">
-    <div class="option-block">
-      <p>Choose Year &gt;</p>
-      <button id="choose-year">List of Years</button>
-    </div>
-    <div class="option-block">
-      <p>Choose Campus &gt;</p>
-      <button class="campus-list">List of Campuses</button>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
-  
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-  }
-  </script>
-  <!-- {% endblock %} -->
+    {% endblock %}
 </body>
 </html>
