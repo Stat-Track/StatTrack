@@ -2,10 +2,22 @@ from App.models import User
 from App.database import db
 
 def create_user(username, password, role='user'):
-    newuser = User(username=username, password=password, role=role)
-    db.session.add(newuser)
-    db.session.commit()
-    return newuser
+    try:
+        # Check if user already exists
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return None
+        
+        # Create new user with hashed password
+        new_user = User(username=username, password=password, role=role)
+        
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error creating user: {e}")
+        return None
 
 def get_user_by_username(username):
     return User.query.filter_by(username=username).first()
