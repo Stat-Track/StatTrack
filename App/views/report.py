@@ -41,3 +41,4 @@ def create_new_report():
     new_report = create_report(file)
     flash('Report created successfully!', 'success')
     return redirect(url_for('report_views.view_reports'))
+
