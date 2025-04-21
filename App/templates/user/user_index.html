@@ -60,7 +60,7 @@
                             <select name="campus_id">
                                 <option value="" selected>Campuses</option>
                                 {% for campus in campuses %}
-                                <option value="{{ campus.id }}" {% if selected_campus == campus.id %}selected{% endif %}>{{ campus.name }}</option>
+                                <option value="{{ campus.id }}" {% if selected_campus = campus.id %}selected{% endif %}>{{ campus.name }}</option>
                                 {% endfor %}
                             </select>
                             <label>Campus</label>
