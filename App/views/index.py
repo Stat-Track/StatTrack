@@ -24,6 +24,7 @@ def index_page():
         # If JWT verification fails, redirect to login
         return redirect(url_for('auth_views.login_page'))
 
+
 @index_views.route('/init', methods=['GET'])
 def init():
     initialize()
