@@ -4,6 +4,11 @@ from App.controllers.report import create_report, delete_report_by_id
 
 # Create the blueprint
 reports_views = Blueprint('reports_view', __name__)               #Configured views/report.py -Jaidi Akii-Bua
+generate_views = Blueprint('generate_view', __name__)                   
+
+@generate_views.route('/gen_report')
+def view_generate_report():
+    return render_template('admin/gen_reports.html')
 
 @reports_views.route('/reports')
 def view_reports():
