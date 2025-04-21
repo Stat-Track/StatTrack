@@ -28,7 +28,7 @@
     <!-- Navbar -->
     <nav class="indigo darken-4 navbar">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo right">StatTrack</a>
+        <a href="{{ url_for('admin.index')}}" class="brand-logo right">StatTrack</a>
       </div>
     </nav>
     <div class="layout-body">
@@ -48,11 +48,15 @@
           <a href="/login" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
         </div>
       </div>
-<!-- Main content area -->
+<!-- Main content area -->   
 <div class="main-content">
   <!-- Put your page content here -->
+   <div class="search-container">
+<input type="text", placeholder="Search report title" class="search-bar">
+<i class="material-icons search-icon">search</i>
+</div>  
   </div>
     </div>
-  <!-- {% endblock %} -->
+  <!-- {% endblock %} --> 
    </body>
 </html>
