@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     {% block title %} 
-    Admin's Welcome Page
+    Generate Report
     {% endblock %} 
   </title>
 
@@ -18,12 +17,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
-  <link rel="stylesheet" href="../static/style.css"> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body style="font-family: 'Roboto', sans-serif; background-color: #f8f9fa;">
-  <!-- {% block content %} -->
+  {% block content %}
 
   <div class="layout-container">
     <!-- Navbar -->
@@ -31,7 +29,8 @@
       <div class="nav-wrapper">
         <a href="{{ url_for('admin.index')}}" class="brand-logo right">StatTrack</a>
       </div>
-    </nav> 
+    </nav>
+
     <div class="layout-body">
       <!-- Sidebar -->
       <div id="sidebar">
@@ -45,7 +44,7 @@
           <hr>
         </div>
         <ul class="menu">
-          <li><a href= "#", onClick="openForm()">Upload</a></li>
+          <li><a href="{{ url_for('admin.index')}}" onClick="openForm()">Upload</a></li>
           <li><a href="{{ url_for('generate_view.view_generate_report') }}">Generate Report</a></li>
           <li><a href="{{ url_for('reports_view.view_reports') }}">View Reports</a></li>
         </ul>
@@ -53,148 +52,208 @@
           <a href="/login" class="logout-link"><h4>Logout</h4> <i class="material-icons">logout</i></a>
         </div>
       </div>
-<!-- Main content area -->
-<div class="main-content">
-  <!-- Put your page content here -->
-  
-  <div class="upload-section">
-    <button class="file-upload" onClick ="openForm()">Upload File</button>
 
-     <!-- The form -->
-<div class="form-popup" id="myForm">
-    <input type="file" id="fileInput" class="hidden">
-    <label for="fileInput" class="uploadButton">Choose File</label>
-    <p id="fileName"></p>
-    <div id="file-preview-container">
-      <!-- Image Preview -->
-      <img id="image-preview" src="" alt="Image Preview" style="display: none; max-width: 100%; max-height: 300px;"/>
-  
-      <!-- Text Preview -->
-      <pre id="text-preview" style="display: none; max-height: 200px; overflow-y: scroll;"></pre>
-  
-      <!-- PDF Preview -->
-      <div id="pdf-preview" style="display: none;">
-        <embed id="pdf-preview-embed" src="" type="application/pdf" style="width: 100%; height: 300px;">
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <form id="reportForm">
+          <input type="hidden" id="selectedValues" name="selectedValues">
+
+          <!-- Dropdowns Section -->
+          <div class="row">
+            <div class="col s12 m6">
+              <!-- Year Dropdown -->
+              <div class="option-block">
+                <p>Choose Year ></p>
+                <button class="choose-btn" data-type="year">List of Years</button>
+                <div class="list-container" data-type="year" style="display: none;"></div>
+              </div>
+            </div>
+
+            <div class="col s12 m6">
+              <!-- Campus Dropdown -->
+              <div class="option-block">
+                <p>Choose Campus ></p>
+                <button class="choose-btn" data-type="campus">List of Campuses</button>
+                <div class="list-container" data-type="campus" style="display: none;"></div>
+              </div>
+            </div>
+
+            <div class="col s12 m6">
+              <!-- Faculty Dropdown -->
+              <div class="option-block">
+                <p>Choose Faculty ></p>
+                <button class="choose-btn" data-type="faculty">List of Faculties</button>
+                <div class="list-container" data-type="faculty" style="display: none;"></div>
+              </div>
+            </div>
+
+            <div class="col s12 m6">
+              <!-- Chart Preference Dropdown -->
+              <div class="option-block">
+                <p>Choose Chart Preference ></p>
+                <button class="choose-btn" data-type="chart">List of Charts</button>
+                <div class="list-container" data-type="chart" style="display: none;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Selected Output -->
+          <p id="selected-output" style="margin-top: 15px; font-weight: bold;"></p>
+
+          <!-- Design Chart Button -->
+          <button class="design-chart" onClick="openChartPopup()">Design Chart</button>
+
+          <!-- Chart Popup -->
+          <div class="chart-popup" id="chartPopup" style="display: none;">
+            <h4>Design Your Chart</h4>
+            <p><strong>Selected Data:</strong> <span id="popup-selected-output"></span></p>
+            <label for="chart-type">Chart Type:</label>
+            <select id="chart-type">
+              <option value="bar">Bar Chart</option>
+              <option value="line">Line Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+            <button class="btn3" onClick="generateChart()">Generate Chart</button>
+            <button class="btn-cancel" onClick="closeChartPopup()">Close</button>
+            <canvas id="chartCanvas" width="400" height="200" style="margin-top: 20px;"></canvas>
+          </div>
+        </form>
       </div>
     </div>
-    <!-- <button class="btn1">Choose File</button> -->
-  
-    <button class="btn3">Upload</button>
-   <button class="btn-cancel" onclick="closeForm()">Close</button>
-    <script>
-      document.getElementById('fileInput').addEventListener('change', function() {
-        var fileName = this.files[0].name;
-        document.getElementById('fileName').textContent = "Selected file: " + fileName;
-      });
-    </script>
-
-    
-  
-  
-  
-</div>
-
   </div>
 
-  <!--div class="option-sections">
-    <div class="option-block">
-      <p>Choose Year &gt;</p>
-      <button id="choose-year">List of Years</button>
-      <div id="year-list" style="display: none; margin-top: 10px;"-->
-        <!-- Years will be inserted here dynamically -->
-      </div>
-      <p id="selected-year" style="margin-top: 10px;"></p>
-    </div>
-   
-
-  <!-- 
-    <div class="option-block">
-      <p>Choose Campus &gt;</p>
-      <button class="campus-list">List of Campuses</button>
-    </div>
-  -->
-  </div>
-</div>
-</div>
-</div>
-
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    const dataOptions = {
+      year: [2025, 2024, 2023, 2022, 2021],
+      campus: ["UWI STA", "UWI Mona", "UWI Cave Hill", "UWI Five Islands"],
+      faculty: ["Science", "Arts", "Engineering", "Business"],
+      chart: ["Bar", "Line", "Pie"]
+    };
 
-    document.getElementById('fileInput').addEventListener('change', function () {
-      var file = this.files[0];
-      document.getElementById('fileName').textContent = "Selected file: " + file.name;
-  
-      // Clear any previous previews
-      document.getElementById('image-preview').style.display = 'none';
-      document.getElementById('text-preview').style.display = 'none';
-      document.getElementById('pdf-preview').style.display = 'none';
-  
-      var reader = new FileReader();
-  
-      // Check the file type
-      if (file.type.startsWith('image')) {
-        // Image file
-        reader.onload = function(e) {
-          document.getElementById('image-preview').src = e.target.result;
-          document.getElementById('image-preview').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      } else if (file.type === 'text/plain') {
-        // Text file
-        reader.onload = function(e) {
-          document.getElementById('text-preview').textContent = e.target.result;
-          document.getElementById('text-preview').style.display = 'block';
-        };
-        reader.readAsText(file);
-      } else if (file.type === 'application/pdf') {
-        // PDF file
-        var url = URL.createObjectURL(file);
-        document.getElementById('pdf-preview-embed').src = url;
-        document.getElementById('pdf-preview').style.display = 'block';
-      } else {
-        document.getElementById('fileName').textContent = "File type not supported for preview.";
-      }
-    });
+    const selectedValues = {};
 
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
-  
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-  }
+    // Handle dropdowns
+    document.querySelectorAll(".choose-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const type = this.dataset.type;
+        const listContainer = document.querySelector(`.list-container[data-type="${type}"]`);
 
-    const yearList = document.getElementById("year-list");
-    const chooseYearBtn = document.getElementById("choose-year");
-    const selectedYearDisplay = document.getElementById("selected-year");
-  
-    const years = [2025, 2024, 2023, 2022, 2021]; // You can customize this list
-  
-    chooseYearBtn.addEventListener("click", function () {
-      if (yearList.style.display === "none") {
-        yearList.innerHTML = ""; // Clear any existing content
-        years.forEach(year => {
-          const yearItem = document.createElement("div");
-          yearItem.textContent = year;
-          yearItem.className = "year-item"; // You can style this in your CSS
-          yearItem.addEventListener("click", function () {
-            selectedYearDisplay.textContent = "Selected Year: " + year; // Display the selected year
-            yearList.style.display = "none"; // Hide the year list after selection
+        if (listContainer.style.display === "none") {
+          listContainer.innerHTML = "";
+
+          dataOptions[type].forEach(item => {
+            const itemDiv = document.createElement("div");
+            itemDiv.textContent = item;
+            itemDiv.className = `${type}-item`;
+            itemDiv.style.cursor = "pointer";
+            itemDiv.style.marginBottom = "5px";
+            itemDiv.addEventListener("click", function () {
+              selectedValues[type] = item;
+              updateOutput();
+              listContainer.style.display = "none";
+            });
+            listContainer.appendChild(itemDiv);
           });
-          
-          yearList.appendChild(yearItem);
-        });
-        yearList.style.display = "block";
-      } else {
-        yearList.style.display = "none";
-      }
+
+          const clearBtn = document.createElement("button");
+          clearBtn.textContent = "Clear";
+          clearBtn.style.marginTop = "10px";
+          clearBtn.style.backgroundColor = "#d9534f";
+          clearBtn.style.color = "#fff";
+          clearBtn.style.border = "none";
+          clearBtn.style.padding = "5px 10px";
+          clearBtn.style.borderRadius = "5px";
+          clearBtn.style.cursor = "pointer";
+
+          clearBtn.addEventListener("click", function () {
+            delete selectedValues[type];
+            updateOutput();
+            listContainer.style.display = "none";
+          });
+
+          listContainer.appendChild(clearBtn);
+          listContainer.style.display = "block";
+        } else {
+          listContainer.style.display = "none";
+        }
+      });
     });
 
-  
+    // Update selected output
+    function updateOutput() {
+      const output = document.getElementById("selected-output");
+      const popupOutput = document.getElementById("popup-selected-output");
+      const results = Object.entries(selectedValues).map(
+        ([key, value]) => `${capitalize(key)}: ${value}`
+      );
+      output.innerHTML = results.join("<br>");
+      popupOutput.innerHTML = results.join(", ");
+    }
+
+    // Capitalize first letter of a string
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // Open and close the chart popup
+    function openChartPopup() {
+      if (Object.keys(selectedValues).length === 0) {
+        alert("Please select data before designing a chart.");
+        return;
+      }
+      document.getElementById("chartPopup").style.display = "block";
+    }
+
+    function closeChartPopup() {
+      document.getElementById("chartPopup").style.display = "none";
+    }
+
+    function generateChart() {
+  const chartType = document.getElementById("chart-type").value;
+  const ctx = document.getElementById("chartCanvas").getContext("2d");
+
+  // Simulated dynamic chart data based on selected inputs
+  const year = selectedValues.year || "Unknown Year";
+  const campus = selectedValues.campus || "Unknown Campus";
+  const faculty = selectedValues.faculty || "Unknown Faculty";
+
+  const labels = ["Jan", "Feb", "Mar", "Apr", "May"];
+  const randomData = labels.map(() => Math.floor(Math.random() * 100)); // Random data
+
+  const chartData = {
+    labels: labels,
+    datasets: [{
+      label: `${faculty} - ${campus} (${year})`,
+      data: randomData,
+      backgroundColor: "rgba(75, 192, 192, 0.2)",
+      borderColor: "rgba(75, 192, 192, 1)",
+      borderWidth: 1
+    }]
+  };
+
+  if (window.myChart) {
+    window.myChart.destroy();
+  }
+
+  window.myChart = new Chart(ctx, {
+    type: chartType,
+    data: chartData,
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+    // Prevent form submission
+    document.getElementById("reportForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Stop the form from redirecting
+     
+    });
   </script>
   {% endblock %}
 </body>

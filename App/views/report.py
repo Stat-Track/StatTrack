@@ -1,10 +1,28 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, json, jsonify, redirect, render_template, request, url_for
 from App.models.report import Report
 from App.controllers.report import create_report, delete_report_by_id
 
 # Create the blueprint
 reports_views = Blueprint('reports_view', __name__)               #Configured views/report.py -Jaidi Akii-Bua
 generate_views = Blueprint('generate_view', __name__)                   
+
+@reports_views.route('/report/create', methods=['POST'])
+def create_report():
+    try:
+        # Extract selected values
+        selected_values = request.form.get('selectedValues')
+        selected_values = json.loads(selected_values)
+
+        # Extract uploaded file
+        file = request.files['file']
+
+        # Process the data (e.g., save to database)
+        print("Selected Values:", selected_values)
+        print("Uploaded File:", file.filename)
+
+        return jsonify({"message": "Report created successfully!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @generate_views.route('/gen_report')
 def view_generate_report():
